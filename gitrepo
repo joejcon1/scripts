@@ -1,0 +1,11 @@
+# /bin/bash
+REMOTE=`cat .git/config |grep url | awk '{print $3;}'`
+REPO=$(echo $REMOTE | sed -e 's/.*://g' -e 's/\.git//g')
+DOMAIN=$(echo $REMOTE | awk 'BEGIN { FS = "[@\.]"} {print $2}')
+if [ $DOMAIN = 'bitbucket' ]; then
+	URL="https://bitbucket.org/$REPO"
+fi
+if [ $DOMAIN = 'github' ]; then
+	URL="https://github.com/$REPO"
+fi
+open $URL
